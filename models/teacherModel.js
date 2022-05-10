@@ -14,6 +14,9 @@ const teacherSchema = new mongoose.Schema(
     },
     password: {
       type: String,
+      max: 30,
+      min: 6,
+      required: true,
     },
     confirmpassword: {
       type: String,

@@ -1,6 +1,12 @@
 const teachers = require("../models/teacherModel");
 const bcrypt = require("bcryptjs");
-const { registerSchema, loginSchema } = require("../helpers/adminAuth");
+const { registerSchema, loginSchema } = require("../helpers/auth");
+const { initializingPassport } = require("../helpers/teacherPassport");
+initializingPassport();
+
+const login = async (req, res) => {
+  res.json(req.user);
+};
 
 // get all teacher information
 const teacherList = async (req, res) => {
@@ -80,4 +86,5 @@ module.exports = {
   teacherDelete,
   teacherList,
   teacherUpdate,
+  login,
 };

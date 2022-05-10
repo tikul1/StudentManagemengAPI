@@ -17,6 +17,7 @@ const adminSchema = new mongoose.Schema(
     },
     confirmpassword: {
       type: String,
+      select: false,
     },
   },
   {
@@ -27,4 +28,5 @@ adminSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+confirmpassword = undefined;
 module.exports = mongoose.model("Admin", adminSchema);

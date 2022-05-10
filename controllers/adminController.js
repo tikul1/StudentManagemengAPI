@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const admins = require("../models/adminModel");
-const { registerSchema, loginSchema } = require("../helpers/adminAuth");
+const { registerSchema, loginSchema } = require("../helpers/auth");
 const secret = process.env.SECRET_KEY;
 
 // get all admin information
