@@ -13,6 +13,7 @@ const registerSchema = joi.object({
   confirmpassword: joi.ref("password"),
   firstname: joi.string().min(3).max(30).required(),
   lastname: joi.string().min(3).max(30).required(),
+  admin_id: joi.string(),
 });
 
 const loginSchema = joi.object({

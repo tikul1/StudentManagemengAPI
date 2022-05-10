@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const admins = require("../models/adminModel");
 const { registerSchema, loginSchema } = require("../helpers/adminAuth");
+const secret = process.env.SECRET_KEY;
 
 // get all admin information
 const adminList = async (req, res) => {
@@ -81,7 +82,9 @@ const adminLogin = async (req, res) => {
       if (!isMatch) {
         res.status(404).json({ Message: "Please enter correct credentials" });
       } else {
-        res.status(200).json({ adminLogin });
+        const payload = { email };
+        const token = jwt.sign(payload, secret);
+        res.status(200).json({ token });
       }
     } else {
       res.status(405).json({ Message: "Please enter correct credentials" });
