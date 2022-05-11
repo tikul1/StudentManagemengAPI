@@ -5,7 +5,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/admin", require("./routes/adminRoutes"));
-app.use("/teacher", require("./routes/teacherRoute"));
+app.use("/teacher", require("./routes/teacherRoutes"));
+app.use("/student", require("./routes/studentRoutes"));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
