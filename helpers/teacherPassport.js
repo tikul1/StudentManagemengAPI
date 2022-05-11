@@ -2,16 +2,19 @@ const LocalStrategy = require("passport-local").Strategy;
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const teachers = require("../models/teacherModel");
-const loginSchema = require("../helpers/auth");
-const Joi = require("joi");
+const { loginSchema } = require("../helpers/auth");
 
 exports.initializingPassport = () => {
   passport.use(
     new LocalStrategy(
-      { usernameField: "email" },
-      async (email, password, done) => {
+      { usernameField: "email", passReqToCallback: true },
+      async (req, email, password, done) => {
         try {
-          const teacherLogin = await teachers.findOne({ email: email });
+          const { email, password } = req.body;
+          const result = await loginSchema.validateAsync(req.body);
+          const teacherLogin = await teachers.findOne({
+            email: result.email,
+          });
           if (teacherLogin) {
             const isMatch = await bcrypt.compare(
               password,
@@ -29,8 +32,8 @@ exports.initializingPassport = () => {
               Message: "Please enter correct credentials.",
             });
           }
-        } catch (error) {
-          console.log("error");
+        } catch (e) {
+          console.log("Please enter correct credentials", +e);
         }
       }
     )

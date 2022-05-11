@@ -4,8 +4,13 @@ const { registerSchema, loginSchema } = require("../helpers/auth");
 const { initializingPassport } = require("../helpers/teacherPassport");
 initializingPassport();
 
+//login controller for teacher
 const login = async (req, res) => {
-  res.json(req.user);
+  try {
+    res.json(req.user);
+  } catch (e) {
+    res.json({ Message: "An error occured" + e });
+  }
 };
 
 // get all teacher information

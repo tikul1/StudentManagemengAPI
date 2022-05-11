@@ -20,6 +20,7 @@ const teacherSchema = new mongoose.Schema(
     },
     confirmpassword: {
       type: String,
+      select: false,
     },
     admin_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +31,8 @@ const teacherSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+//Pre-save method for password hashing
 teacherSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
