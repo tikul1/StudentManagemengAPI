@@ -70,10 +70,30 @@ const studentDelete = async (req, res) => {
   }
 };
 
+const picUpload = async (req, res) => {
+  try {
+    console.log(req.file);
+    res.send("Image uploaded successfully.");
+  } catch (error) {
+    res.send("Error occured" + error);
+  }
+};
+
+const multiPicUpload = async (req, res) => {
+  try {
+    console.log(req.files);
+    res.send("Images uploaded successfully.");
+  } catch (error) {
+    res.send("Error occured" + error);
+  }
+};
+
 module.exports = {
   studentAdd,
   studentById,
   studentDelete,
   studentList,
   studentUpdate,
+  picUpload,
+  multiPicUpload,
 };
