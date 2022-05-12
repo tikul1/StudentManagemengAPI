@@ -1,0 +1,158 @@
+definition:
+  openapi: 3.0.0
+  info:
+    title: Student Mangement API
+    version: 1.0.0
+    description: Head, Teacher & Student CRUD API
+  server:
+    url: http://localhost:8080
+  paths:
+    /admin:
+      get:
+        summary: Returns the list of the Admins
+        tags:
+          - Admins
+        responses:
+          200:
+            description: List of Admins
+            content:
+              application/json:
+                schema:
+                  type: array
+                  item:
+                  example: Hardik
+    /admin/searchadmin/{id}:
+      get:
+        summary: Get the Admin by id
+        tags:
+          - Admins
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Admins by Id
+
+        responses:
+          200:
+            description: Search Admin by Id
+            content:
+              application/json:
+                schema:
+          404:
+            description: Not Found
+    /admin/addadmin:
+      post:
+        summary: Create a new Admin
+        tags:
+          - Admins
+        requestBody:
+          description: Create Admin
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstname:
+                    type: string
+                    example: head
+                  lastname:
+                    type: string
+                    example: twenty eight
+                  email:
+                    type: string
+                    example: head28@school.com
+                  password:
+                    type: string
+                    example: sdfsdf21fsdfsf2134
+                  confirmpassword:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: New Admin was successfully created
+          500:
+            description: Some error
+    /admin/updateadmin/{id}:
+      put:
+        summary: Update the Admin by id
+        tags:
+          - Admins
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: users id
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstname:
+                    type: string
+                    example: head
+                  lastname:
+                    type: string
+                    example: twenty eight
+                  email:
+                    type: number
+                    example: head28@school.com
+                  password:
+                    type: string
+                    example: sdfsdf21fsdfsf2134
+                  confirmpassword:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: User is updated
+          404:
+            description: User not found
+          500:
+            description: Some error
+    /admin/removeadmin/{id}:
+      delete:
+        summary: Remove the Admin by id
+        tags:
+          - Admins
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Admin id
+        responses:
+          200:
+            description: Admin is removed
+          404:
+            description: Admin not found
+    /admin/login:
+      post:
+        summary: Loging in to Admin
+        tags:
+          - Admins
+        requestBody:
+          description: Create Admin
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    example: head26@school.com
+                  password:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: Admin Logged in
+apis: ["./controllers/*.js"]
