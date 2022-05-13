@@ -53,7 +53,6 @@ const studentUpdate = async (req, res) => {
     const student = await students.findById(req.params.id);
     Object.assign(student, req.body);
     await student.save();
-    console.log(req.body);
     res.status(200).json({ Message: "student details updated successfully" });
   } catch (e) {
     res.status(400).json({ meesage: "An error occured: " + e });

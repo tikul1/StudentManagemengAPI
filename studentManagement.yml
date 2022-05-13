@@ -6,6 +6,12 @@ definition:
     description: Head, Teacher & Student CRUD API
   server:
     url: http://localhost:8080
+  components:
+    securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
   paths:
     /admin:
       get:
@@ -86,7 +92,7 @@ definition:
             schema:
               type: string
               required: true
-              description: users id
+              description: Admin id
         requestBody:
           required: true
           content:
@@ -111,9 +117,9 @@ definition:
                     example: 123456
         responses:
           200:
-            description: User is updated
+            description: Admin is updated
           404:
-            description: User not found
+            description: Admin not found
           500:
             description: Some error
     /admin/removeadmin/{id}:
@@ -139,7 +145,7 @@ definition:
         tags:
           - Admins
         requestBody:
-          description: Create Admin
+          description: Login Admin
           required: true
           content:
             application/json:
@@ -155,4 +161,326 @@ definition:
         responses:
           200:
             description: Admin Logged in
+            
+       
+    /teacher/a:
+      post:
+        summary: Login for Teacher
+        tags:
+          - Teachers
+        requestBody:
+          description: Login Teacher
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    example: teacher2@school.com
+                  password:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: Teacher Authorized
+          400:
+            description: Unauthorized.              
+    /teacher:
+      get:
+        security:
+          - bearerAuth: [ ]
+        summary: Returns the list of the Teachers
+        tags:
+          - Teachers
+        responses:
+          200:
+            description: List of Teachers
+            content:
+              application/json:
+                schema:
+                  type: array
+                  item:
+                  example: Hardik
+    /teacher/searchteacher/{id}:
+      get:
+        summary: Get the Teacher by id
+        tags:
+          - Teachers
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Teachers by Id
+
+        responses:
+          200:
+            description: Search Teacher by Id
+            content:
+              application/json:
+                schema:
+          404:
+            description: Not Found
+    /teacher/addteacher:
+      post:
+        summary: Create a new Teacher
+        tags:
+          - Teachers
+        requestBody:
+          description: Create Teacher
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstname:
+                    type: string
+                    example: teacher
+                  lastname:
+                    type: string
+                    example: twenty eight
+                  email:
+                    type: string
+                    example: teacher28@school.com
+                  password:
+                    type: string
+                    example: sdfsdf21fsdfsf2134
+                  confirmpassword:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: New Teacher was successfully created
+          500:
+            description: Some error
+    /teacher/updateteacher/{id}:
+      put:
+        summary: Update the Teacher by id
+        tags:
+          - Teachers
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Teacher id
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstname:
+                    type: string
+                    example: head
+                  lastname:
+                    type: string
+                    example: twenty eight
+                  email:
+                    type: number
+                    example: teacher2@school.com
+                  password:
+                    type: string
+                    example: sdfsdf21fsdfsf2134
+                  confirmpassword:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: Teacher is updated
+          404:
+            description: Teacher not found
+          500:
+            description: Some error
+    /teacher/removeteacher/{id}:
+      delete:
+        summary: Remove the Teacher by id
+        tags:
+          - Teachers
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Teacher id
+        responses:
+          200:
+            description: Teacher is removed
+          404:
+            description: Teacher not found
+    /admin/login:
+      post:
+        summary: Loging in to Teacher
+        tags:
+          - Teachers
+        requestBody:
+          description: Create Teacher
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    example: teacher26@school.com
+                  password:
+                    type: string
+                    example: 123456
+        responses:
+          200:
+            description: Teacher Logged in
+    /student:
+      get:
+        summary: Get all the Students
+        tags:
+          - Students
+        responses:
+          200:
+            description: Student list
+            content:
+              application/json:
+                  schema:
+                    type: array  
+          400:
+            description: Students not found   
+    /student/studentbyid/{id}:
+      get:
+        summary: get student by Id
+        tags: 
+          - Students
+        parameters: 
+          - in : path
+            name: id
+        responses:
+          200:
+            description: Student by Id
+            content:
+              application/json:
+                schema:
+                  required: true
+                  type: array
+          400:
+            description: Student not found
+    /student/addstudent:
+      post:
+        summary: Add Student details
+        tags:
+          - Students
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstname:
+                    type: string
+                    example: student
+                  lastname:
+                    type: string
+                    example: nine
+                  email:
+                    type: string
+                    example: student9@school.com
+        responses:
+          200: 
+            description: Student added successfully
+          400:
+            description: Some Error            
+    /student/updatestudent/{id}:
+      put:
+        summary: Update student details by Id
+        tags: 
+          - Students
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Student Id
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  firstname:  
+                    type: string
+                    example: student
+                  lastname:
+                    type: string
+                    example: one
+                  email:
+                    type: string
+                    example: student1@school.com
+        responses:
+          200: 
+            description: Student updated Suceessfully.
+          400:
+            description: Some Error.              
+    /student/removestudent/{id}:
+      delete:
+        summary: Removes Student by ID
+        tags:
+          - Students
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+              required: true
+              description: Student Id
+        responses:
+          200:
+            description: Student removed successfully.
+          400:
+            desctiption: Some Error      
+    /student/picstudent:
+      post:
+        summary: Add image.
+        tags:
+          - Students
+        requestBody:
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        responses:
+          200: 
+            description: Image uploaded successfully
+          400:
+            description: Some error in uploading.
+    /student/multipicstudent:
+      post:
+        summary: Add multiple images
+        tags: 
+          - Students
+        requestBody:
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: array
+                    items:
+                      type: string
+                      format: binary
+        responses:
+          200:
+            description: Images uploaded successfully
+          400:
+            description: Some Error in uploading.
+
 apis: ["./controllers/*.js"]
