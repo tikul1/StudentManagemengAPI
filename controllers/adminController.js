@@ -31,18 +31,18 @@ const adminAdd = async (req, res) => {
     const result = await registerSchema.validateAsync(req.body);
     const adminExist = await admins.findOne({ email: result.email });
     if (adminExist) {
-      throw console.error("user exist");
+      res.status(400).json({ message: "user exist" });
+    } else {
+      const admin = await new admins({
+        firstname,
+        lastname,
+        email,
+        password,
+        confirmpassword,
+      });
+      await admin.save();
+      res.status(200).send(admin);
     }
-
-    const admin = await new admins({
-      firstname,
-      lastname,
-      email,
-      password,
-      confirmpassword,
-    });
-    await admin.save();
-    res.status(200).send(admin);
   } catch (error) {
     res.status(400).json({ meesage: "An error occured: " + error });
   }
