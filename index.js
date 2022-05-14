@@ -5,11 +5,13 @@ const YAML = require("yamljs");
 const mongoose = require("./db/db");
 const env = require("dotenv").config();
 const app = express();
+const { invalidPathHandler } = require("./helpers/apiError");
 app.use(express.json());
 
 app.use("/admin", require("./routes/adminRoutes"));
 app.use("/teacher", require("./routes/teacherRoutes"));
 app.use("/student", require("./routes/studentRoutes"));
+app.use(invalidPathHandler);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

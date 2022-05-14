@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const admins = require("../models/adminModel");
 const { registerSchema, loginSchema } = require("../helpers/auth");
 const secret = process.env.SECRET_KEY;
+const { userExist, notFound } = require("../helpers/apiError");
 
 // get all admin information
 const adminList = async (req, res) => {
@@ -10,17 +11,18 @@ const adminList = async (req, res) => {
     const list = await admins.find();
     res.status(200).json({ list });
   } catch (e) {
-    res.status(400).json({ meesage: "An error occured: " + e });
+    res.json({ notFound });
   }
 };
 
 // get admin information by id
+
 const adminById = async (req, res) => {
   try {
     const list = await admins.findById(req.params.id);
     res.status(200).json({ list });
   } catch (e) {
-    res.status(400).json({ meesage: "An error occured: " + e });
+    res.json({ notFound });
   }
 };
 
@@ -31,7 +33,7 @@ const adminAdd = async (req, res) => {
     const result = await registerSchema.validateAsync(req.body);
     const adminExist = await admins.findOne({ email: result.email });
     if (adminExist) {
-      res.status(400).json({ message: "user exist" });
+      res.status(400).json({ userExist });
     } else {
       const admin = await new admins({
         firstname,
@@ -44,7 +46,7 @@ const adminAdd = async (req, res) => {
       res.status(200).send(admin);
     }
   } catch (error) {
-    res.status(400).json({ meesage: "An error occured: " + error });
+    res.json({ msg: error });
   }
 };
 
@@ -56,8 +58,8 @@ const adminUpdate = async (req, res) => {
     await admin.save();
     console.log(req.body);
     res.status(200).json({ Message: "Admin details updated successfully" });
-  } catch (e) {
-    res.status(400).json({ meesage: "An error occured: " + e });
+  } catch (error) {
+    res.json({ notFound });
   }
 };
 
@@ -66,8 +68,8 @@ const adminDelete = async (req, res) => {
   try {
     await admins.findByIdAndRemove(req.params.id);
     res.status(200).json({ Message: "Admin removed successfully." });
-  } catch (e) {
-    res.status(400).json({ meesage: "An error occured: " + e });
+  } catch (error) {
+    res.json({ notFound });
   }
 };
 
@@ -87,11 +89,9 @@ const adminLogin = async (req, res) => {
         res.status(200).json({ token });
       }
     } else {
-      res.status(405).json({ Message: "Please enter correct credentials" });
+      res.json({ notFound });
     }
-  } catch (e) {
-    res.status(400).json({ message: "An error occured : " + e });
-  }
+  } catch (error) {}
 };
 
 module.exports = {
