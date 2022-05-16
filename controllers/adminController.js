@@ -91,7 +91,7 @@ const adminLogin = async (req, res) => {
         res.status(404).json(invalidCredentials);
       } else {
         const payload = { email };
-        const token = jwt.sign(payload, secret);
+        const token = jwt.sign(payload, secret, { expiresIn: "1h" });
         res.status(200).json({ token });
       }
     } else {

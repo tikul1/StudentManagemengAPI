@@ -23,7 +23,7 @@ const imageUpload = multer({
     if (mimeType && extName) {
       return cb(null, true);
     } else {
-      return cb(imageError);
+      return cb(JSON.stringify(imageError));
     }
   },
 });
