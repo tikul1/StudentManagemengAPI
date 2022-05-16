@@ -67,7 +67,7 @@ const studentSuccess = {
 const teacherSuccess = {
   status: "Success",
   code: 200,
-  message: "Teacher added/updared successfully.",
+  message: "Teacher added/updated successfully.",
 };
 
 const adminRemove = {
