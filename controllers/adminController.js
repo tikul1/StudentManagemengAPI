@@ -3,7 +3,14 @@ const jwt = require("jsonwebtoken");
 const admins = require("../models/adminModel");
 const { registerSchema, loginSchema } = require("../helpers/auth");
 const secret = process.env.SECRET_KEY;
-const { userExist, notFound } = require("../helpers/apiError");
+const {
+  adminExistError,
+  adminSuccess,
+  adminRemove,
+  addError,
+  adminNotFound,
+  invalidCredentials,
+} = require("../helpers/apiError");
 
 // get all admin information
 const adminList = async (req, res) => {
@@ -11,7 +18,7 @@ const adminList = async (req, res) => {
     const list = await admins.find();
     res.status(200).json({ list });
   } catch (e) {
-    res.json({ notFound });
+    res.status(404).json({ adminNotFound });
   }
 };
 
@@ -22,7 +29,7 @@ const adminById = async (req, res) => {
     const list = await admins.findById(req.params.id);
     res.status(200).json({ list });
   } catch (e) {
-    res.json({ notFound });
+    res.status(404).json({ adminNotFound });
   }
 };
 
@@ -33,7 +40,7 @@ const adminAdd = async (req, res) => {
     const result = await registerSchema.validateAsync(req.body);
     const adminExist = await admins.findOne({ email: result.email });
     if (adminExist) {
-      res.status(400).json({ userExist });
+      res.status(400).json({ adminExistError });
     } else {
       const admin = await new admins({
         firstname,
@@ -43,10 +50,10 @@ const adminAdd = async (req, res) => {
         confirmpassword,
       });
       await admin.save();
-      res.status(200).send(admin);
+      res.status(200).send(adminSuccess);
     }
   } catch (error) {
-    res.json({ msg: error });
+    res.status(401).json(addError);
   }
 };
 
@@ -56,10 +63,9 @@ const adminUpdate = async (req, res) => {
     const admin = await admins.findById(req.params.id);
     Object.assign(admin, req.body);
     await admin.save();
-    console.log(req.body);
-    res.status(200).json({ Message: "Admin details updated successfully" });
+    res.status(200).json(adminSuccess);
   } catch (error) {
-    res.json({ notFound });
+    res.status(401).json(addError);
   }
 };
 
@@ -67,9 +73,9 @@ const adminUpdate = async (req, res) => {
 const adminDelete = async (req, res) => {
   try {
     await admins.findByIdAndRemove(req.params.id);
-    res.status(200).json({ Message: "Admin removed successfully." });
+    res.status(200).json(adminRemove);
   } catch (error) {
-    res.json({ notFound });
+    res.status(404).json(adminNotFound);
   }
 };
 
@@ -82,16 +88,18 @@ const adminLogin = async (req, res) => {
     if (adminLogin) {
       const isMatch = await bcrypt.compare(password, adminLogin.password);
       if (!isMatch) {
-        res.status(404).json({ Message: "Please enter correct credentials" });
+        res.status(404).json(invalidCredentials);
       } else {
         const payload = { email };
         const token = jwt.sign(payload, secret);
         res.status(200).json({ token });
       }
     } else {
-      res.json({ notFound });
+      res.status(404).json({ adminNotFound });
     }
-  } catch (error) {}
+  } catch (error) {
+    res.status(404).json(adminNotFound);
+  }
 };
 
 module.exports = {
