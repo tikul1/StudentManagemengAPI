@@ -105,6 +105,24 @@ const studentPicFail = {
   message: "Image/Images failed to upload.",
 };
 
+const imageError = {
+  status: "Error",
+  code: 401,
+  message: "Only Images allowed.",
+};
+
+const unauthorized = {
+  status: "Error",
+  code: 401,
+  message: "Access denied. Unauthorized.",
+};
+
+const tokenError = {
+  status: "Error",
+  code: 401,
+  message: "Token not provided.",
+};
+
 function invalidPathHandler(req, res, next) {
   res.status(404);
   res.send("Invalid path");
@@ -130,4 +148,7 @@ module.exports = {
   teacherNotFound,
   teacherRemove,
   teacherSuccess,
+  unauthorized,
+  tokenError,
+  imageError,
 };

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY;
+const { unauthorized, tokenError } = require("./apiError");
 
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
@@ -9,13 +10,13 @@ function verifyToken(req, res, next) {
     req.token = bearer[1];
     jwt.verify(req.token, secret, (err, data) => {
       if (err) {
-        res.status(401).json({ Message: "Access denied. Unauthorized." });
+        res.status(401).json(unauthorized);
       } else {
         next();
       }
     });
   } else {
-    res.status(401).json({ Message: "Token not provided" });
+    res.status(401).json(tokenError);
   }
 }
 

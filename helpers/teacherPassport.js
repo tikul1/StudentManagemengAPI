@@ -3,6 +3,7 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const teachers = require("../models/teacherModel");
 const { loginSchema } = require("../helpers/auth");
+const { invalidCredentials } = require("./apiError");
 
 exports.initializingPassport = () => {
   passport.use(
@@ -22,18 +23,18 @@ exports.initializingPassport = () => {
             );
             if (!isMatch) {
               return done(null, false, {
-                Message: "Please enter correct credentials.",
+                Message: invalidCredentials,
               });
             } else {
               return done(null, teacherLogin);
             }
           } else {
             return done(null, false, {
-              Message: "Please enter correct credentials.",
+              Message: invalidCredentials,
             });
           }
         } catch (e) {
-          console.log("Please enter correct credentials", +e);
+          console.log(invalidCredentials);
         }
       }
     )
