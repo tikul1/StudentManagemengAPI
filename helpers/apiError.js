@@ -1,154 +1,31 @@
-const adminExistError = {
-  status: "Error",
-  code: 400,
-  message: "Admin already exist.",
-};
-
-const teacherExistError = {
-  status: "Error",
-  code: 400,
-  message: "Teacher already exist.",
-};
-
-const studentExistError = {
-  status: "Error",
-  code: 400,
-  message: "Student already exist.",
-};
-
-const adminNotFound = {
-  status: "Error",
-  code: 404,
-  message: "Admin not found.",
-};
-
-const teacherNotFound = {
-  status: "Error",
-  code: 404,
-  message: " Teacher not found.",
-};
-
-const studentNotFound = {
-  status: "Error",
-  code: 404,
-  message: "Students not found.",
-};
-
-const addError = {
-  status: "Error",
-  code: 401,
-  message: "Failed to Add/Update Admin.",
-};
-
-const studentAddError = {
-  status: "Error",
-  code: 401,
-  message: "Failed to Add/Update Student.",
-};
-
-const teacherAddError = {
-  status: "Error",
-  code: 401,
-  message: "Failed to Add/Updater Teacher.",
-};
-
-const adminSuccess = {
-  status: "Success",
-  code: 200,
-  message: "Admin added/updated successfully.",
-};
-
-const studentSuccess = {
-  status: "Success",
-  code: 200,
-  message: "Student added/updated successfully.",
-};
-
-const teacherSuccess = {
-  status: "Success",
-  code: 200,
-  message: "Teacher added/updated successfully.",
-};
-
-const adminRemove = {
-  status: "Success",
-  code: 200,
-  message: "Admin removed successfully.",
-};
-
-const studentRemove = {
-  status: "Success",
-  code: 200,
-  message: "Student removed successfully.",
-};
-
-const teacherRemove = {
-  status: "Success",
-  code: 200,
-  message: "Teacher removed successfully.",
-};
-
-const invalidCredentials = {
-  status: "Error",
-  code: 401,
-  message: "Please enter correct credentials.",
-};
-
-const studentPicSuccess = {
-  status: "Success",
-  code: 200,
-  message: "Image/Images uploaded successfully.",
-};
-const studentPicFail = {
-  status: "Error",
-  code: 401,
-  message: "Image/Images failed to upload.",
-};
-
-const imageError = {
-  status: "Error",
-  code: 401,
-  message: "Only Images allowed.",
-};
-
-const unauthorized = {
-  status: "Error",
-  code: 401,
-  message: "Access denied. Unauthorized.",
-};
-
-const tokenError = {
-  status: "Error",
-  code: 401,
-  message: "Token not provided.",
-};
-
-function invalidPathHandler(req, res, next) {
-  res.status(404);
-  res.send("Invalid path");
-}
-
 module.exports = {
-  invalidPathHandler,
-  adminExistError,
-  adminNotFound,
-  addError,
-  adminSuccess,
-  adminRemove,
-  invalidCredentials,
-  studentNotFound,
-  studentAddError,
-  studentSuccess,
-  studentExistError,
-  studentRemove,
-  studentPicSuccess,
-  studentPicFail,
-  teacherAddError,
-  teacherExistError,
-  teacherNotFound,
-  teacherRemove,
-  teacherSuccess,
-  unauthorized,
-  tokenError,
-  imageError,
+  admin: {
+    adminExistError: "Admin already exist.",
+    adminNotFound: "Admin not found.",
+    addError: "Failed to Add/Update Admin.",
+    adminSuccess: "Admin added/updated successfully.",
+    adminRemove: "Admin removed successfully.",
+  },
+  teacher: {
+    teacherExistError: "Teacher already exist.",
+    teacherAddError: "Failed to Add/Updater Teacher.",
+    teacherRemove: "Teacher removed successfully.",
+    teacherNotFound: " Teacher not found.",
+    teacherSuccess: "Teacher added/updated successfully.",
+  },
+  student: {
+    studentExistError: "Student already exist.",
+    studentNotFound: "Students not found.",
+    studentAddError: "Failed to Add/Update Student.",
+    studentSuccess: "Student added/updated successfully.",
+    studentRemove: "Student removed successfully.",
+    imageError: "Only Images allowed.",
+    studentPicFail: "Image/Images failed to upload.",
+    studentPicSuccess: "Image/Images uploaded successfully.",
+  },
+  jwt: {
+    invalidCredentials: "Please enter correct credentials.",
+    unauthorized: "Access denied. Unauthorized.",
+    tokenError: "Token not provided.",
+  },
 };

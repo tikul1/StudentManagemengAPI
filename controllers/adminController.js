@@ -3,34 +3,25 @@ const jwt = require("jsonwebtoken");
 const admins = require("../models/adminModel");
 const { registerSchema, loginSchema } = require("../helpers/auth");
 const secret = process.env.SECRET_KEY;
-const {
-  adminExistError,
-  adminSuccess,
-  adminRemove,
-  addError,
-  adminNotFound,
-  invalidCredentials,
-} = require("../helpers/apiError");
-
+const adminError = require("../helpers/apiError");
 // get all admin information
+
 const adminList = async (req, res) => {
   try {
     const list = await admins.find();
     res.status(200).json({ list });
   } catch (e) {
-    res.status(404).json({ adminNotFound });
+    res.status(404).json(adminError["admin"].adminNotFound);
   }
 };
 
 // get admin information by id
 
 const adminById = async (req, res) => {
-  try {
-    const list = await admins.findById(req.params.id);
+  const list = await admins.findById(req.params.id);
+  if (list) {
     res.status(200).json({ list });
-  } catch (e) {
-    res.status(404).json({ adminNotFound });
-  }
+  } else res.status(404).send(adminError["admin"].adminNotFound);
 };
 
 // adding admin information
@@ -40,7 +31,7 @@ const adminAdd = async (req, res) => {
     const result = await registerSchema.validateAsync(req.body);
     const adminExist = await admins.findOne({ email: result.email });
     if (adminExist) {
-      res.status(400).json({ adminExistError });
+      res.status(400).json(adminError.admin.adminExistError);
     } else {
       const admin = await new admins({
         firstname,
@@ -50,10 +41,10 @@ const adminAdd = async (req, res) => {
         confirmpassword,
       });
       await admin.save();
-      res.status(200).send(adminSuccess);
+      res.status(200).send(adminError.admin.adminSuccess);
     }
   } catch (error) {
-    res.status(401).json(addError);
+    res.status(401).json(adminError.admin.addError);
   }
 };
 
@@ -63,9 +54,9 @@ const adminUpdate = async (req, res) => {
     const admin = await admins.findById(req.params.id);
     Object.assign(admin, req.body);
     await admin.save();
-    res.status(200).json(adminSuccess);
+    res.status(200).json(adminError.admin.adminSuccess);
   } catch (error) {
-    res.status(401).json(addError);
+    res.status(401).json(adminError.admin.addError);
   }
 };
 
@@ -73,9 +64,9 @@ const adminUpdate = async (req, res) => {
 const adminDelete = async (req, res) => {
   try {
     await admins.findByIdAndRemove(req.params.id);
-    res.status(200).json(adminRemove);
+    res.status(200).json(adminError.admin.adminRemove);
   } catch (error) {
-    res.status(404).json(adminNotFound);
+    res.status(404).json(adminError.admin.adminNotFound);
   }
 };
 
@@ -88,17 +79,17 @@ const adminLogin = async (req, res) => {
     if (adminLogin) {
       const isMatch = await bcrypt.compare(password, adminLogin.password);
       if (!isMatch) {
-        res.status(404).json(invalidCredentials);
+        res.status(404).json(adminError.jwt.invalidCredentials);
       } else {
         const payload = { email };
         const token = jwt.sign(payload, secret, { expiresIn: "1h" });
         res.status(200).json({ token });
       }
     } else {
-      res.status(404).json({ adminNotFound });
+      res.status(404).json(adminError.admin.adminNotFound);
     }
   } catch (error) {
-    res.status(404).json(adminNotFound);
+    res.status(404).json(adminError.admin.adminNotFound);
   }
 };
 

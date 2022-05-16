@@ -1,14 +1,6 @@
 const students = require("../models/studentModel");
 const { studentRegisterSchema } = require("../helpers/auth");
-const {
-  studentNotFound,
-  studentAddError,
-  studentSuccess,
-  studentRemove,
-  studentPicSuccess,
-  studentPicFail,
-  studentExistError,
-} = require("../helpers/apiError");
+const studentError = require("../helpers/apiError");
 
 // get all student information
 const studentList = async (req, res) => {
@@ -18,7 +10,7 @@ const studentList = async (req, res) => {
       .populate("teacher_id", "_id firstname lastname");
     res.status(200).json({ list });
   } catch (e) {
-    res.status(400).json(studentNotFound);
+    res.status(400).json(studentError["student"].studentNotFound);
   }
 };
 
@@ -28,7 +20,7 @@ const studentById = async (req, res) => {
     const list = await students.findById(req.params.id);
     res.status(200).json({ list });
   } catch (e) {
-    res.status(400).json(studentNotFound);
+    res.status(400).json(studentError["student"].studentNotFound);
   }
 };
 
@@ -40,7 +32,7 @@ const studentAdd = async (req, res) => {
     const result = await studentRegisterSchema.validateAsync(req.body);
     const studentExist = await students.findOne({ email: result.email });
     if (studentExist) {
-      res.json(studentExistError);
+      res.json(studentError["student"].studentExistError);
     } else {
       const student = await new students({
         firstname,
@@ -49,10 +41,10 @@ const studentAdd = async (req, res) => {
         teacher_id,
       });
       await student.save();
-      res.status(200).json(studentSuccess);
+      res.status(200).json(studentError["student"].studentSuccess);
     }
   } catch (error) {
-    res.status(400).json(studentAddError);
+    res.status(400).json(studentError["student"].studentAddError);
   }
 };
 
@@ -62,9 +54,9 @@ const studentUpdate = async (req, res) => {
     const student = await students.findById(req.params.id);
     Object.assign(student, req.body);
     await student.save();
-    res.status(200).json(studentSuccess);
+    res.status(200).json(studentError["student"].studentSuccess);
   } catch (e) {
-    res.status(400).json(studentNotFound);
+    res.status(400).json(studentError["student"].studentNotFound);
   }
 };
 
@@ -72,27 +64,27 @@ const studentUpdate = async (req, res) => {
 const studentDelete = async (req, res) => {
   try {
     await students.findByIdAndRemove(req.params.id);
-    res.status(200).json(studentRemove);
+    res.status(200).json(studentError["student"].studentRemove);
   } catch (e) {
-    res.status(400).json(studentNotFound);
+    res.status(400).json(studentError["student"].studentNotFound);
   }
 };
 
 const picUpload = async (req, res) => {
   try {
     console.log(req.file);
-    res.send(studentPicSuccess);
+    res.send(studentError["student"].studentPicSuccess);
   } catch (error) {
-    res.send(studentPicFail);
+    res.send(studentError["student"].studentPicFail);
   }
 };
 
 const multiPicUpload = async (req, res) => {
   try {
     console.log(req.files);
-    res.send(studentPicSuccess);
+    res.send(studentError["student"].studentPicSuccess);
   } catch (error) {
-    res.send(studentPicFail);
+    res.send(studentError["student"].studentPicFail);
   }
 };
 
