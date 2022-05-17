@@ -109,10 +109,21 @@ const studentDelete = async (req, res) => {
 
 const picUpload = async (req, res) => {
   try {
-    console.log(req.file);
-    res.send(
-      successResponse(200, "Success", studentError["student"].studentPicSuccess)
-    );
+    if (!req.file) {
+      res
+        .status(400)
+        .send(
+          errorResponse(400, "Error", studentError["student"].studentPicFail)
+        );
+    } else {
+      res.send(
+        successResponse(
+          200,
+          "Success",
+          studentError["student"].studentPicSuccess
+        )
+      );
+    }
   } catch (error) {
     res
       .status(400)
@@ -124,10 +135,21 @@ const picUpload = async (req, res) => {
 
 const multiPicUpload = async (req, res) => {
   try {
-    console.log(req.files);
-    res.send(
-      successResponse(200, "Success", studentError["student"].studentPicSuccess)
-    );
+    if (req.files) {
+      res.send(
+        successResponse(
+          200,
+          "Success",
+          studentError["student"].studentPicSuccess
+        )
+      );
+    } else {
+      res
+        .status(400)
+        .send(
+          errorResponse(400, "Error", studentError["student"].studentPicFail)
+        );
+    }
   } catch (error) {
     res
       .status(400)
