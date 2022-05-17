@@ -6,7 +6,7 @@ const passport = require("passport");
 
 router.post("/a", passport.authenticate("local"), teacherController.login);
 router.get("/", jwtHelper.verifyToken, teacherController.teacherList);
-router.get("/teacher/:id", teacherController.teacherById);
+router.get("/searchteacher/:id", teacherController.teacherById);
 router.post("/addteacher", teacherController.teacherAdd);
 router.put("/updateteacher/:id", teacherController.teacherUpdate);
 router.delete("/removeteacher/:id", teacherController.teacherDelete);

@@ -1,6 +1,11 @@
 const students = require("../models/studentModel");
 const { studentRegisterSchema } = require("../helpers/auth");
 const studentError = require("../helpers/apiError");
+const {
+  successResponse,
+  alertResponse,
+  errorResponse,
+} = require("../helpers/responseErrHelper");
 
 // get all student information
 const studentList = async (req, res) => {
@@ -8,9 +13,13 @@ const studentList = async (req, res) => {
     const list = await students
       .find()
       .populate("teacher_id", "_id firstname lastname");
-    res.status(200).json({ list });
+    res.status(200).json(successResponse(200, "Success", list));
   } catch (e) {
-    res.status(400).json(studentError["student"].studentNotFound);
+    res
+      .status(400)
+      .json(
+        errorResponse(400, "Error", studentError["student"].studentNotFound)
+      );
   }
 };
 
@@ -18,9 +27,13 @@ const studentList = async (req, res) => {
 const studentById = async (req, res) => {
   try {
     const list = await students.findById(req.params.id);
-    res.status(200).json({ list });
+    res.status(200).json(successResponse(200, "Success", list));
   } catch (e) {
-    res.status(400).json(studentError["student"].studentNotFound);
+    res
+      .status(400)
+      .json(
+        errorResponse(400, "Error", studentError["student"].studentNotFound)
+      );
   }
 };
 
@@ -32,7 +45,11 @@ const studentAdd = async (req, res) => {
     const result = await studentRegisterSchema.validateAsync(req.body);
     const studentExist = await students.findOne({ email: result.email });
     if (studentExist) {
-      res.json(studentError["student"].studentExistError);
+      res
+        .status(401)
+        .json(
+          alertResponse(401, "Alert", studentError["student"].studentExistError)
+        );
     } else {
       const student = await new students({
         firstname,
@@ -41,10 +58,14 @@ const studentAdd = async (req, res) => {
         teacher_id,
       });
       await student.save();
-      res.status(200).json(studentError["student"].studentSuccess);
+      res.status(200).json(successResponse(200, "Success", student));
     }
   } catch (error) {
-    res.status(400).json(studentError["student"].studentAddError);
+    res
+      .status(400)
+      .json(
+        console.error(400, "Error", studentError["student"].studentAddError)
+      );
   }
 };
 
@@ -54,9 +75,17 @@ const studentUpdate = async (req, res) => {
     const student = await students.findById(req.params.id);
     Object.assign(student, req.body);
     await student.save();
-    res.status(200).json(studentError["student"].studentSuccess);
+    res
+      .status(200)
+      .json(
+        successResponse(200, "Success", studentError["student"].studentSuccess)
+      );
   } catch (e) {
-    res.status(400).json(studentError["student"].studentNotFound);
+    res
+      .status(400)
+      .json(
+        errorResponse(400, "Error", studentError["student"].studentNotFound)
+      );
   }
 };
 
@@ -64,27 +93,47 @@ const studentUpdate = async (req, res) => {
 const studentDelete = async (req, res) => {
   try {
     await students.findByIdAndRemove(req.params.id);
-    res.status(200).json(studentError["student"].studentRemove);
+    res
+      .status(200)
+      .json(
+        successResponse(200, "Success", studentError["student"].studentRemove)
+      );
   } catch (e) {
-    res.status(400).json(studentError["student"].studentNotFound);
+    res
+      .status(400)
+      .json(
+        errorResponse(400, "Error", studentError["student"].studentNotFound)
+      );
   }
 };
 
 const picUpload = async (req, res) => {
   try {
     console.log(req.file);
-    res.send(studentError["student"].studentPicSuccess);
+    res.send(
+      successResponse(200, "Success", studentError["student"].studentPicSuccess)
+    );
   } catch (error) {
-    res.send(studentError["student"].studentPicFail);
+    res
+      .status(400)
+      .send(
+        errorResponse(400, "Error", studentError["student"].studentPicFail)
+      );
   }
 };
 
 const multiPicUpload = async (req, res) => {
   try {
     console.log(req.files);
-    res.send(studentError["student"].studentPicSuccess);
+    res.send(
+      successResponse(200, "Success", studentError["student"].studentPicSuccess)
+    );
   } catch (error) {
-    res.send(studentError["student"].studentPicFail);
+    res
+      .status(400)
+      .send(
+        errorResponse(400, "Error", studentError["student"].studentPicFail)
+      );
   }
 };
 

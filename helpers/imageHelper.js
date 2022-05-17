@@ -1,7 +1,6 @@
 const multer = require("multer");
 const moment = require("moment");
 const path = require("path");
-const { imageError } = require("./apiError");
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -23,7 +22,7 @@ const imageUpload = multer({
     if (mimeType && extName) {
       return cb(null, true);
     } else {
-      return cb(JSON.stringify(imageError));
+      return cb("Image Only");
     }
   },
 });
