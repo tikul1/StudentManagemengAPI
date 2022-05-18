@@ -1,7 +1,7 @@
 const teachers = require("../models/teacherModel");
 const { registerSchema } = require("../helpers/auth");
 const { initializingPassport } = require("../helpers/teacherPassport");
-const teacherError = require("../helpers/apiError");
+const teacherMessage = require("../helpers/apiError");
 const {
   successResponse,
   alertResponse,
@@ -13,12 +13,21 @@ initializingPassport();
 //login controller for teacher
 const login = async (req, res) => {
   try {
-    res.status(200).json(successResponse(200, "Success", req.user));
+    res
+      .status(200)
+      .json(
+        successResponse(
+          200,
+          "Success",
+          teacherMessage.teacher.teacherLogin,
+          req.user
+        )
+      );
   } catch (e) {
     res
       .status(400)
       .json(
-        errorResponse(400, "Error", teacherError["teacher"].teacherNotFound)
+        errorResponse(400, "Error", teacherMessage["teacher"].teacherNotFound)
       );
   }
 };
@@ -29,12 +38,21 @@ const teacherList = async (req, res) => {
     const list = await teachers
       .find()
       .populate("admin_id", "_id firstname lastname");
-    res.status(200).json(successResponse(200, "success", list));
+    res
+      .status(200)
+      .json(
+        successResponse(
+          200,
+          "success",
+          teacherMessage.teacher.teacherList,
+          list
+        )
+      );
   } catch (e) {
     res
       .status(400)
       .json(
-        errorResponse(400, "error", teacherError["teacher"].teacherNotFound)
+        errorResponse(400, "error", teacherMessage["teacher"].teacherNotFound)
       );
   }
 };
@@ -43,12 +61,21 @@ const teacherList = async (req, res) => {
 const teacherById = async (req, res) => {
   try {
     const list = await teachers.findById(req.params.id);
-    res.status(200).json(successResponse(200, "Success", list));
+    res
+      .status(200)
+      .json(
+        successResponse(
+          200,
+          "Success",
+          teacherMessage.teacher.teacherById,
+          list
+        )
+      );
   } catch (e) {
     res
       .status(400)
       .json(
-        errorResponse(400, "Error", teacherError["teacher"].teacherNotFound)
+        errorResponse(400, "Error", teacherMessage["teacher"].teacherNotFound)
       );
   }
 };
@@ -65,7 +92,11 @@ const teacherAdd = async (req, res) => {
       res
         .status(401)
         .json(
-          alertResponse(401, "Error", teacherError["teacher"].teacherExistError)
+          alertResponse(
+            401,
+            "Error",
+            teacherMessage["teacher"].teacherExistError
+          )
         );
     } else {
       const teacher = await new teachers({
@@ -83,7 +114,8 @@ const teacherAdd = async (req, res) => {
           successResponse(
             200,
             "Success",
-            teacherError["teacher"].teacherSuccess
+            teacherMessage["teacher"].teacherSuccess,
+            teacher
           )
         );
     }
@@ -91,7 +123,7 @@ const teacherAdd = async (req, res) => {
     res
       .status(400)
       .json(
-        errorResponse(400, "Error", teacherError["teacher"].teacherAddError)
+        errorResponse(400, "Error", teacherMessage["teacher"].teacherAddError)
       );
   }
 };
@@ -105,13 +137,18 @@ const teacherUpdate = async (req, res) => {
     res
       .status(200)
       .json(
-        successResponse(200, "Success", teacherError["teacher"].teacherSuccess)
+        successResponse(
+          200,
+          "Success",
+          teacherMessage["teacher"].teacherSuccess,
+          teacher
+        )
       );
   } catch (e) {
     res
       .status(400)
       .json(
-        errorResponse(400, "Error", teacherError["teacher"].teacherAddError)
+        errorResponse(400, "Error", teacherMessage["teacher"].teacherAddError)
       );
   }
 };
@@ -119,17 +156,22 @@ const teacherUpdate = async (req, res) => {
 // removing Teacher information
 const teacherDelete = async (req, res) => {
   try {
-    await teachers.findByIdAndRemove(req.params.id);
+    const teacher = await teachers.findByIdAndRemove(req.params.id);
     res
       .status(200)
       .json(
-        successResponse(200, "Success", teacherError["teacher"].teacherRemove)
+        successResponse(
+          200,
+          "Success",
+          teacherMessage["teacher"].teacherRemove,
+          teacher
+        )
       );
   } catch (e) {
     res
       .status(400)
       .json(
-        errorResponse(400, "Error", teacherError["teacher"].teacherNotFound)
+        errorResponse(400, "Error", teacherMessage["teacher"].teacherNotFound)
       );
   }
 };

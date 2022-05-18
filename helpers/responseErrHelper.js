@@ -1,7 +1,8 @@
-const successResponse = (code, status, formData) => {
+const successResponse = (code, status, message, formData) => {
   let data = {
     code: code,
     status: "Success",
+    message: message,
     formData: formData,
   };
   return data;
@@ -16,11 +17,11 @@ const alertResponse = (code, status1, formData) => {
   return data;
 };
 
-const errorResponse = (code, status1, formData) => {
+const errorResponse = (code, status1, message) => {
   let data = {
     status1: "Error",
     code: code,
-    formData: formData,
+    message: message,
   };
   return data;
 };

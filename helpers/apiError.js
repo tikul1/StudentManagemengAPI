@@ -6,13 +6,18 @@
       addError: "Failed to Add/Update Admin.",
       adminSuccess: "Admin added/updated successfully.",
       adminRemove: "Admin removed successfully.",
+      adminList: "Admin list. ",
+      adminById: "Admin by ID.",
     },
     teacher: {
       teacherExistError: "Teacher already exist.",
-      teacherAddError: "Failed to Add/Updater Teacher.",
+      teacherAddError: "Failed to Add/Update Teacher.",
       teacherRemove: "Teacher removed successfully.",
       teacherNotFound: " Teacher not found.",
       teacherSuccess: "Teacher added/updated successfully.",
+      teacherList: "teacher list. ",
+      teacherById: "Teacher by ID.",
+      teacherLogin: "Logged in",
     },
     student: {
       studentExistError: "Student already exist.",
@@ -23,10 +28,13 @@
       imageError: "Only Images allowed.",
       studentPicFail: "Image/Images failed to upload.",
       studentPicSuccess: "Image/Images uploaded successfully.",
+      studentList: "Student list. ",
+      studdentById: "Student by ID.",
     },
     jwt: {
       invalidCredentials: "Please enter correct credentials.",
       unauthorized: "Access denied. Unauthorized.",
       tokenError: "Token not provided.",
+      tokenSuccess: "JWT token generated.",
     },
   });

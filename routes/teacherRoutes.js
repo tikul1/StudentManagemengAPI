@@ -4,8 +4,12 @@ const jwtHelper = require("../helpers/jwtHelper");
 const teacherController = require("../controllers/teacherController");
 const passport = require("passport");
 
-router.post("/a", passport.authenticate("local"), teacherController.login);
-router.get("/", jwtHelper.verifyToken, teacherController.teacherList);
+router.post(
+  "/passport",
+  passport.authenticate("local"),
+  teacherController.login
+);
+router.get("/jwt", jwtHelper.verifyToken, teacherController.teacherList);
 router.get("/searchteacher/:id", teacherController.teacherById);
 router.post("/addteacher", teacherController.teacherAdd);
 router.put("/updateteacher/:id", teacherController.teacherUpdate);

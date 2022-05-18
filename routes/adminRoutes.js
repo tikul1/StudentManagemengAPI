@@ -8,6 +8,5 @@ router.post("/addadmin", adminController.adminAdd);
 router.put("/updateadmin/:id", adminController.adminUpdate);
 router.delete("/removeadmin/:id", adminController.adminDelete);
 router.post("/login", adminController.adminLogin);
-// router.get("/jwt", jwtHelper.verifyToken, teacherController.teacherList);
 
 module.exports = router;
