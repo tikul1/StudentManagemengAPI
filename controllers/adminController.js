@@ -4,11 +4,52 @@ const admins = require("../models/adminModel");
 const { registerSchema, loginSchema } = require("../helpers/auth");
 const secret = process.env.SECRET_KEY;
 const adminMessage = require("../helpers/apiError");
+const exceljs = require("exceljs");
+const moment = require("moment");
 const {
   successResponse,
   alertResponse,
   errorResponse,
 } = require("../helpers/responseErrHelper");
+
+//creating excel report
+
+const excel = async (req, res) => {
+  const startDate = moment().month(4);
+  // console.log(startDate);
+  const endDate = moment(new Date()).endOf();
+  // console.log(endDate);
+  try {
+    const excelUsers = await admins.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    });
+    // console.log(excelUsers);
+    const workbook = new exceljs.Workbook();
+    const worksheet = workbook.addWorksheet("My Admin");
+    worksheet.columns = [
+      { header: "S_no", key: "S_no", width: 10 },
+      { header: "_id", key: "_id", width: 10 },
+      { header: "firstname", key: "firstname", width: 10 },
+      { header: "lastname", key: "lastname", width: 10 },
+      { header: "email", key: "email", width: 10 },
+      { header: "password", key: "password", width: 10 },
+      { header: "confirmpassword", key: "confirmpassword", width: 10 },
+    ];
+    let count = 1;
+    excelUsers.forEach((user) => {
+      user.S_no = count;
+      worksheet.addRow(user);
+      count += 1;
+    });
+    worksheet.getRow(1).eachCell((cell) => {
+      cell.font = { bold: true };
+    });
+    const data = workbook.xlsx.writeFile("admin_may.xlsx");
+    res.send("Done");
+  } catch (e) {
+    res.send(e);
+  }
+};
 
 // get all admin information
 const adminList = async (req, res) => {
@@ -155,6 +196,7 @@ const adminLogin = async (req, res) => {
 };
 
 module.exports = {
+  excel,
   adminList,
   adminById,
   adminAdd,
