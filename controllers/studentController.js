@@ -3,6 +3,12 @@ const { studentRegisterSchema } = require("../helpers/auth");
 const studentMessage = require("../helpers/apiError");
 const { successResponse, alertResponse, errorResponse } = require("../helpers/responseErrHelper");
 
+// const students = {
+//   firstname: "Hardik",
+//   lastname: "Parmar",
+//   email: "hardik@gmail.com",
+//   teacher_id: "123341234123",
+// };
 // get all student information
 const studentList = async (req, res) => {
   try {
@@ -69,6 +75,7 @@ const studentDelete = async (req, res) => {
   }
 };
 
+// for uploading single image
 const picUpload = async (req, res) => {
   try {
     if (!req.file) {
@@ -81,6 +88,7 @@ const picUpload = async (req, res) => {
   }
 };
 
+//for uploading multiple images
 const multiPicUpload = async (req, res) => {
   try {
     if (req.files) {

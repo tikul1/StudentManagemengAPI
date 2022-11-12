@@ -6,14 +6,9 @@ const secret = process.env.SECRET_KEY;
 const adminMessage = require("../helpers/apiError");
 const exceljs = require("exceljs");
 const moment = require("moment");
-const {
-  successResponse,
-  alertResponse,
-  errorResponse,
-} = require("../helpers/responseErrHelper");
+const { successResponse, alertResponse, errorResponse } = require("../helpers/responseErrHelper");
 
 //creating excel report
-
 const excel = async (req, res) => {
   const startDate = moment().month(4);
   // console.log(startDate);
@@ -55,15 +50,9 @@ const excel = async (req, res) => {
 const adminList = async (req, res) => {
   try {
     const list = await admins.find({});
-    res
-      .status(200)
-      .json(
-        successResponse(200, "Success", adminMessage.admin.adminList, list)
-      );
+    res.status(200).json(successResponse(200, "Success", adminMessage.admin.adminList, list));
   } catch (e) {
-    res
-      .status(404)
-      .json(errorResponse(404, "Error", adminMessage["admin"].adminNotFound));
+    res.status(404).json(errorResponse(404, "Error", adminMessage["admin"].adminNotFound));
   }
 };
 
@@ -72,15 +61,9 @@ const adminById = async (req, res) => {
   try {
     const list = await admins.findById(req.params.id);
 
-    res
-      .status(200)
-      .json(
-        successResponse(200, "Success", adminMessage.admin.adminById, { list })
-      );
+    res.status(200).json(successResponse(200, "Success", adminMessage.admin.adminById, { list }));
   } catch (e) {
-    res
-      .status(404)
-      .send(errorResponse(404, "Error", adminMessage["admin"].adminNotFound));
+    res.status(404).send(errorResponse(404, "Error", adminMessage["admin"].adminNotFound));
   }
 };
 
@@ -91,9 +74,7 @@ const adminAdd = async (req, res) => {
     const result = await registerSchema.validateAsync(req.body);
     const adminExist = await admins.findOne({ email: result.email });
     if (adminExist) {
-      res
-        .status(400)
-        .json(alertResponse(400, "Error", adminMessage.admin.adminExistError));
+      res.status(400).json(alertResponse(400, "Error", adminMessage.admin.adminExistError));
     } else {
       const admin = await new admins({
         firstname,
@@ -103,21 +84,10 @@ const adminAdd = async (req, res) => {
         confirmpassword,
       });
       await admin.save();
-      res
-        .status(200)
-        .send(
-          successResponse(
-            200,
-            "Success",
-            adminMessage.admin.adminSuccess,
-            admin
-          )
-        );
+      res.status(200).send(successResponse(200, "Success", adminMessage.admin.adminSuccess, admin));
     }
   } catch (error) {
-    res
-      .status(401)
-      .json(errorResponse(401, "Error", adminMessage.admin.addError));
+    res.status(401).json(errorResponse(401, "Error", adminMessage.admin.addError));
   }
 };
 
@@ -127,15 +97,9 @@ const adminUpdate = async (req, res) => {
     const admin = await admins.findById(req.params.id);
     Object.assign(admin, req.body);
     await admin.save();
-    res
-      .status(200)
-      .json(
-        successResponse(200, "Success", adminMessage.admin.adminSuccess, admin)
-      );
+    res.status(200).json(successResponse(200, "Success", adminMessage.admin.adminSuccess, admin));
   } catch (error) {
-    res
-      .status(401)
-      .json(errorResponse(401, "Error", adminMessage.admin.addError));
+    res.status(401).json(errorResponse(401, "Error", adminMessage.admin.addError));
   }
 };
 
@@ -143,15 +107,9 @@ const adminUpdate = async (req, res) => {
 const adminDelete = async (req, res) => {
   try {
     const admin = await admins.findByIdAndRemove(req.params.id);
-    res
-      .status(200)
-      .json(
-        successResponse(200, "Success", adminMessage.admin.adminRemove, admin)
-      );
+    res.status(200).json(successResponse(200, "Success", adminMessage.admin.adminRemove, admin));
   } catch (error) {
-    res
-      .status(404)
-      .json(errorResponse(404, "Error", adminMessage["admin"].adminNotFound));
+    res.status(404).json(errorResponse(404, "Error", adminMessage["admin"].adminNotFound));
   }
 };
 
@@ -164,34 +122,17 @@ const adminLogin = async (req, res) => {
     if (adminLogin) {
       const isMatch = await bcrypt.compare(password, adminLogin.password);
       if (!isMatch) {
-        res
-          .status(401)
-          .json(
-            alertResponse(401, "Alert", adminMessage.jwt.invalidCredentials)
-          );
+        res.status(401).json(alertResponse(401, "Alert", adminMessage.jwt.invalidCredentials));
       } else {
         const payload = { email };
         const token = jwt.sign(payload, secret, { expiresIn: "1h" });
-        res
-          .status(200)
-          .json(
-            successResponse(
-              200,
-              "Success",
-              adminMessage.jwt.tokenSuccess,
-              token
-            )
-          );
+        res.status(200).json(successResponse(200, "Success", adminMessage.jwt.tokenSuccess, token));
       }
     } else {
-      res
-        .status(401)
-        .json(alertResponse(401, "Alert", adminMessage.jwt.invalidCredentials));
+      res.status(401).json(alertResponse(401, "Alert", adminMessage.jwt.invalidCredentials));
     }
   } catch (error) {
-    res
-      .status(404)
-      .json(alertResponse(401, "Alert", adminMessage.jwt.invalidCredentials));
+    res.status(404).json(alertResponse(401, "Alert", adminMessage.jwt.invalidCredentials));
   }
 };
 
