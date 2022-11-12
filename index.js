@@ -2,7 +2,6 @@ const express = require("express");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const YAML = require("yamljs");
-const Joi = require("joi");
 
 const creaateHmac = require("crypto");
 const mongoose = require("./db/db");
