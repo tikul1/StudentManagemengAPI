@@ -4,22 +4,35 @@ Project i created while doing internship.
 # FrameWork
 Express js FrameWork
 
-# Teacher and superAdmin with authorization and authentication
+# functionality 
+ Management of school in which Teacher, student and superAdmin(HOD or Principal) can login and assign/add/remove/update as per their roles.
+ aslo while creating admin can assign roles and upload pictures.
+ authorization and authentications of users.
+ 
+# Database
+  Mongodb.
+  JOI: for validation in models/
+  connecting mongodb locally and using mongodb compass cluster.
 
-# JOI for validation
+# Image upload
+  Multer: for single and multiple image uploading.
 
-# multer for image upload
+# Authorization and Authentication
+ passportJS
+ JWT
+ Bcrypt for password hashing
 
-# passportJS and JWT
+# Documentation
+  Swagger using YML file for applications documentation
+  
+# Reports
+  excelJs: for creating excel sheets
 
-# Bcrypt for password hashing
+# Advance  
+ clustering for multithreading to divide load on application.
+ and making application 30%
+ 
+# Tools
+  Nodemon: for continous app runtime
+  Docker: for handling and delivering application faster 
 
-# swaggerJS for api documentation
-
-# excel js for creating excel sheets
-
-# clustering for multithreading
-
-# docker
-
-# connection mongodb locally and using mongodb compass cluster
