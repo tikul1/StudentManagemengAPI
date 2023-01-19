@@ -6,7 +6,7 @@ const mongoDBConnection = require("./db/db");
 require("dotenv").config();
 const cluster = require("cluster");
 const totalCPUs = require("os").cpus().length;
-const https = require("https");
+const http = require("http");
 const app = express();
 app.use(express.json());
 
@@ -49,12 +49,15 @@ app.use(express.json());
 //   const specs = swaggerJsDoc(options);
 //   app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 // }
+app.use("/test", (req, res) => {
+  res.send("hello");
+});
 
 app.use("/admin", require("./routes/adminRoutes"));
 app.use("/teacher", require("./routes/teacherRoutes"));
 app.use("/student", require("./routes/studentRoutes"));
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 //while using local db
 
@@ -64,7 +67,7 @@ const PORT = process.env.PORT || 8080;
 
 //while using cluster db
 
-https.createServer(app).listen(PORT, function () {
+http.createServer(app).listen(PORT, function () {
   mongoDBConnection();
   console.log(`Server started on port ${PORT}`);
 });

@@ -2,6 +2,8 @@ version: "3"
 services:
   student-app:
     build: .
+    ports: 
+      - ${PORT}:${PORT}
     volumes:
       - ./:/app
       - /app/node_modules
