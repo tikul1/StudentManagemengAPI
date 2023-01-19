@@ -1,5 +1,5 @@
 # StudentManagementAPI
-# Project i created while doing internship.
+Project i created while doing internship.
 
 # FrameWork
 Express js FrameWork
