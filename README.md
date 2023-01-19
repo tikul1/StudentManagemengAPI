@@ -36,3 +36,6 @@ Express js FrameWork
   Nodemon: for continous app runtime
   Docker: for handling and delivering application faster 
 
+# Testing
+  Postman: 1) For Api testing.
+           2) Writing test cases in Postman for checking API's runtime, success status, input and output data validation.
