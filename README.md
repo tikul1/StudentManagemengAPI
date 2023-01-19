@@ -1,6 +1,9 @@
 # StudentManagementAPI
 Project i created while doing internship.
 
+# Technology
+ Nodejs
+
 # FrameWork
 Express js FrameWork
 
