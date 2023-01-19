@@ -1,0 +1,9 @@
+version: "3"
+services:
+  student-app:
+    build: .
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    env_file:
+      - ./.env

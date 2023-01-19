@@ -1,0 +1,12 @@
+hardik:
+  name:
+  address:
+    hobby:
+      sports:
+  age:
+  activity:
+    - abc
+    - def
+part:
+  name:
+  

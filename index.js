@@ -2,56 +2,71 @@ const express = require("express");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const YAML = require("yamljs");
-const mongoose = require("./db/db");
+const mongoDBConnection = require("./db/db");
 require("dotenv").config();
 const cluster = require("cluster");
 const totalCPUs = require("os").cpus().length;
-// const app = express();
-// app.use(express.json());
+const https = require("https");
+const app = express();
+app.use(express.json());
 
-if (cluster.isMaster) {
-  console.log(`Number of CPUs is ${totalCPUs}`);
-  console.log(`Master ${process.pid} is running`);
+// if (cluster.isMaster) {
+//   console.log(`Number of CPUs is ${totalCPUs}`);
+//   console.log(`Master ${process.pid} is runsadasning`);
+//   console.log("hello");
+//   // Fork workers.
+//   for (let i = 0; i < totalCPUs; i++) {
+//     cluster.fork();
+//   }
 
-  // Fork workers.
-  for (let i = 0; i < totalCPUs; i++) {
-    cluster.fork();
-  }
+//   cluster.on("exit", (worker, code, signal) => {
+//     console.log(`worker ${worker.process.pid} died`);
+//     cluster.fork();
+//   });
+// } else {
+//   const app = express();
+//   app.use(express.json());
 
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-    console.log("Let's fork another worker!");
-    cluster.fork();
-  });
-} else {
-  const app = express();
-  app.use(express.json());
+//   console.log(`Worker ${process.pid} started`);
 
-  console.log(`Worker ${process.pid} started`);
+//   app.use("/admin", require("./routes/adminRoutes"));
+//   app.use("/teacher", require("./routes/teacherRoutes"));
+//   app.use("/student", require("./routes/studentRoutes"));
 
-  app.use("/admin", require("./routes/adminRoutes"));
-  app.use("/teacher", require("./routes/teacherRoutes"));
-  app.use("/student", require("./routes/studentRoutes"));
+//   const PORT = process.env.PORT;
+//   // app.listen(PORT, () => {
+//   //   console.log("app running on port 8080");
+//   // });
 
-  const PORT = process.env.PORT || 8080;
-  app.listen(PORT, () => {
-    console.log("app running on port 8080");
-  });
+//   https.createServer(app).listen(PORT, function () {
+//     mongoDBConnection();
+//     console.log(`Server started on port ${PORT}`);
+//   });
 
-  const options = YAML.load("studentManagement.yml");
-  const specs = swaggerJsDoc(options);
-  app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
-}
+//   const options = YAML.load("studentManagement.yml");
+//   const specs = swaggerJsDoc(options);
+//   app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+// }
 
-// app.use("/admin", require("./routes/adminRoutes"));
-// app.use("/teacher", require("./routes/teacherRoutes"));
-// app.use("/student", require("./routes/studentRoutes"));
+app.use("/admin", require("./routes/adminRoutes"));
+app.use("/teacher", require("./routes/teacherRoutes"));
+app.use("/student", require("./routes/studentRoutes"));
 
-// const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
+
+//while using local db
+
 // app.listen(PORT, () => {
 //   console.log("app running on port 8080");
 // });
 
-// const options = YAML.load("studentManagement.yml");
-// const specs = swaggerJsDoc(options);
-// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+//while using cluster db
+
+https.createServer(app).listen(PORT, function () {
+  mongoDBConnection();
+  console.log(`Server started on port ${PORT}`);
+});
+
+const options = YAML.load("studentManagement.yml");
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
