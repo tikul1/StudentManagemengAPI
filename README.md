@@ -33,7 +33,7 @@ Express js FrameWork
 
 # Advance  
  clustering for multithreading to divide load on application.
- and making application 30%
+ and making application 30% faster.
  
 # Tools
   Nodemon: for continous app runtime
