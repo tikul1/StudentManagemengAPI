@@ -10,6 +10,8 @@ const https = require("https");
 const app = express();
 app.use(express.json());
 
+//using cluster for multithreading
+
 // if (cluster.isMaster) {
 //   console.log(`Number of CPUs is ${totalCPUs}`);
 //   console.log(`Master ${process.pid} is runsadasning`);
