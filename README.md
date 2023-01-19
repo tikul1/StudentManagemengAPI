@@ -8,9 +8,8 @@ Project i created while doing internship.
 Express js FrameWork
 
 # Functionality 
- Management of school in which Teacher, student and superAdmin(HOD or Principal) can login and assign/add/remove/update as per their roles.
- aslo while creating admin can assign roles and upload pictures.
- authorization and authentications of users.
+ Management of school in which Teacher, student and superAdmin(HOD or Principal) can login and add/remove/update as per their roles.
+ aslo while creating admin can assign roles and upload pictures with authorization and authentications of users.
  
 # Database
   Mongodb.
