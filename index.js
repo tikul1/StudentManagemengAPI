@@ -7,6 +7,7 @@ require("dotenv").config();
 const cluster = require("cluster");
 const totalCPUs = require("os").cpus().length;
 const http = require("http");
+const fs = require("fs");
 const app = express();
 app.use(express.json());
 
@@ -75,3 +76,8 @@ http.createServer(app).listen(PORT, function () {
 const options = YAML.load("studentManagement.yml");
 const specs = swaggerJsDoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+
+//if uploads folder is not available
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
