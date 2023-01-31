@@ -6,7 +6,7 @@
 
 ### FrameWork
 
-Express js FrameWork
+**_ExpressJs_**
 
 ### Functionality
 
@@ -28,9 +28,9 @@ Express js FrameWork
 
 ### Database
 
-**_Mongodb_**: noSqL database
-**_JOI_**: For validation in models
-**_mongoose_**: ORM
+- **_Mongodb_**: noSqL database
+- **_JOI_**: For validation in models
+- **_mongoose_**: ORM
 
 ### Image upload
 
@@ -38,9 +38,9 @@ Express js FrameWork
 
 ### Authorization and Authentication
 
-**_passportJS_**: for authorization.
-**_JWT_**: json web tokens for authentication.
-**_Bcrypt_**: for password hashing.
+- **_passportJS_**: for authorization.
+- **_JWT_**: json web tokens for authentication.
+- **_Bcrypt_**: for password hashing.
 
 ### Documentation
 
@@ -57,9 +57,9 @@ and making application faster.
 
 ### Tools
 
-**_Nodemon_**: for continous app runtime
-**_Docker_**: for handling and delivering application faster
-**_git_**: for version controlling
+- **_Nodemon_**: for continous app runtime
+- **_Docker_**: for handling and delivering application faster
+- **_git_**: for version controlling
 
 ### Testing
 
