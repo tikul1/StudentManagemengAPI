@@ -10,20 +10,21 @@ Express js FrameWork
 
 ### Functionality
 
-[x] creating express app and Connecting to local mongoDB.
-[x] creating models with validation.
-[x] Teacher, student and superAdmin CRUD with validation.
-[x] authorization, password hashing and authentication.
-[x] single and multiple images uploading for students.
-[x] dockerizing for continous integration.
-[x] git version controlling.
-[x] creating reports of students.
-[x] implementing .env file for environment variables.
-[x] Connecting to mongoDB Cluster.
-[x] swagger documentation for documenting APIs.
-[x] Error handling.
-[x] Clustering and multithreading for dividing load of heavy processing.
-[x] testing
+- [x] creating express app and Connecting to local mongoDB.
+- [x] creating models with validation.
+- [x] Teacher, student and superAdmin CRUD with validation.
+- [x] authorization, password hashing and authentication.
+- [x] single and multiple images uploading for students.
+- [x] dockerizing for continous integration.
+- [x] git version controlling.
+- [x] creating reports of students.
+- [x] implementing .env file for environment variables.
+- [x] Connecting to mongoDB Cluster.
+- [x] swagger documentation for documenting APIs.
+- [x] Error handling.
+- [x] Clustering and multithreading for dividing load of heavy processing.
+- [x] testing
+- [ ] github actions for continous deployement.
 
 ### Database
 
