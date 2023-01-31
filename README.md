@@ -1,10 +1,8 @@
 # StudentManagementAPI
 
-Project i created while doing internship.
-
 # Technology
 
-Nodejs
+***Nodejs***
 
 # FrameWork
 
