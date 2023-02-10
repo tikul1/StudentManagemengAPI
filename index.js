@@ -11,6 +11,8 @@ const fs = require("fs");
 const app = express();
 app.use(express.json());
 
+//dev branch
+
 //using cluster for multithreading
 
 // if (cluster.isMaster) {
@@ -70,7 +72,7 @@ const PORT = process.env.PORT;
 
 http.createServer(app).listen(PORT, function () {
   mongoDBConnection();
-  console.log(`Server started on port ${PORT}`);
+  console.log(`Server started on port ${PORT}...`);
 });
 
 const options = YAML.load("studentManagement.yml");
