@@ -19,7 +19,7 @@ const studentList = async (req, res) => {
   }
 };
 
-//list of all student
+//list of all student hello good morning
 const listofallstudent = async (req,res)=>{
   try {
     let studentlist = await students.find();
