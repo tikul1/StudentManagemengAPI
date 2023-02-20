@@ -19,6 +19,16 @@ const studentList = async (req, res) => {
   }
 };
 
+//list of all student hello good morning
+const listofallstudent = async (req,res)=>{
+  try {
+    let studentlist = await students.find();
+    res.send(studentlist)
+  } catch (error) {
+    res.status(400).json(errorResponse(400, "Error", studentMessage["student"].studentNotFound));
+  }
+}
+
 // get student information by id
 const studentById = async (req, res) => {
   try {
@@ -103,6 +113,7 @@ const multiPicUpload = async (req, res) => {
 
 module.exports = {
   studentAdd,
+  listofallstudent,
   studentById,
   studentDelete,
   studentList,
