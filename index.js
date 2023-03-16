@@ -53,6 +53,13 @@ app.use(express.json());
 //   const specs = swaggerJsDoc(options);
 //   app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 // }
+
+let addressId;
+if (!!addressId) {
+  console.log("hi");
+} else {
+  console.log("bye");
+}
 app.use("/test", (req, res) => {
   res.send("hello");
 });
