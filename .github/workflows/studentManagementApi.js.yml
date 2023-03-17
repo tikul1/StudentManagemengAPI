@@ -18,6 +18,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: creating .env file
+      - run: touch .env
+      - run: echo PORT=$PORT >> .env
+      - run: echo DB_USERNAME=$DB_USERNAME >> .env
+      - run: echo PASSWORD=$DB_PASSWORD >> .env
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
