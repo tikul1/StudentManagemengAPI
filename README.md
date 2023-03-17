@@ -24,7 +24,7 @@
 - [x] Error handling.
 - [x] Clustering and multithreading for dividing load of heavy processing.
 - [x] testing
-- [ ] github actions for continous deployement.
+- [x] github actions for continous deployement.
 
 ### Database
 
