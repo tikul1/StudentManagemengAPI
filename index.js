@@ -80,7 +80,7 @@ const PORT = process.env.PORT;
 
 http.createServer(app).listen(PORT, function () {
   mongoDBConnection();
-  console.log(`Server started onn port ${PORT}...`);
+  console.log(`Server started on port ${PORT}...`);
 });
 
 const options = YAML.load("studentManagement.yml");
