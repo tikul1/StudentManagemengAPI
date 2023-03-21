@@ -1,6 +1,6 @@
 # StudentManagementAPI
 
-## http://13.53.46.196/api/api-docs/#/
+
 
 ## Technology
 
